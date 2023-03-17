@@ -1,17 +1,20 @@
-import requests, json
+import requests
+import json
 
-listpolic = [{
-                "addr_name" : "서울 중구 동호로 14길 18",
-                "name" :"다산치안센터" 
-            },
-            {
-            "addr_name" : "서울 중구 을지로 281",
-            "name" :"DDP치안센터"
-            },
-            {
-            "addr_name" : "서울 중구 충무로2길 39",
-            "name" :"충4치안센터"
-            }]
+listpolic = ["서울 서초구 주흥15길 41",
+"서울 서초구 나루터로 38",
+"서울 서초구 명달로 55",
+"서울 서초구 염곡말길 9",
+"서울 서초구 바우뫼로 45",
+"서울 서초구 방배로 40",
+""""서울 서초구 신반포로15길 14",
+"서울 서초구 방배중앙로 131",
+"서울 강남구 삼성로 761",
+"서울 강남구 압구정로 33길 48",
+""""서울 강남구 남부순환로378길29",
+"서울 강남구 역삼로 117",
+"서울 강남구 삼성로 236",
+"서울 강남구 밤고개로 99"]
 
 def get_coordinate(address): # 주소를 입력받음
     result = "" 
@@ -39,4 +42,4 @@ def get_coordinate(address): # 주소를 입력받음
     return result # 좌표를 반환
 
 for j in range(len(listpolic)):
-    print(get_coordinate(listpolic[j]["addr_name"]))
+    print(get_coordinate(listpolic[j]))
