@@ -20,7 +20,7 @@ def get_coordinate(address): # 주소를 입력받음
     result = "" 
  
     url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + address # 카카오 api 서버스를 이용하여 접근
-    rest_api_key = '4af578c58356b165193c3c4b7eafc1f0' # 사용자 api key
+    rest_api_key = '' # 사용자 api key
     header = {'Authorization': 'KakaoAK ' + rest_api_key} 
 
     r = requests.get(url, headers=header) 

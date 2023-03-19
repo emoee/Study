@@ -9,9 +9,7 @@ cur = conn.cursor()
 sql = "insert into Seouldata(stype, snode_id, snode_code,snode_wkt, slink_id, slink_code, slink_wkt, slink_len, sstartnode_id, sendnode_id, ssgg_cd, ssgg_nm, semd_cd, semd_nm) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 data =  ()
 
-#내가 테스트한거라 결과 5개 나오면 맞는거야!!
-#8088 뒤에 있는게 인증키입니다. 발급받아서 수정하면 되여
-url = "http://openapi.seoul.go.kr:8088/576a4f544e656c6935306f48764574/xmㅁl/TbTraficWlkNet/1/5"
+url = "http://openapi.seoul.go.kr:8088/키/xml/TbTraficWlkNet/1/5"
 
 result = requests.get(url)
 soup = BeautifulSoup(result.text, "lxml")
