@@ -80,7 +80,7 @@ def main():
     heritages_data(heritages)
     csv_heritages = pd.DataFrame(heritages, columns=('문화재종목', '문화재명(국문)', '문화재명(한자)', '시도명', '시군구명', '관리자', '경도', '위도'))
     csv_heritages.to_csv('./cha_openAPI/governments_data.csv', encoding='utf-8', mode='w', index=True) # csv 파일 저장
-    del heritages[:]
+    del heritages[:] # 데이터 저장 후 요소 삭제
     Heritage_Categories() # 위치 기준으로 문화재 막대 그래프 그리기
     heritages_event()
     
