@@ -84,8 +84,6 @@ def work(result, company_info, emp_info, company_title, emp_title):
             time.sleep(1)
 
     driver.close()  
-    
-
 
 def main():
     result = []
@@ -94,23 +92,6 @@ def main():
     company_title = []
     emp_title = []
     work(result, company_info, emp_info, company_title, emp_title)
-    
-    sys.stdout = open('output.txt','w')
-    print(company_title)
-    print(company_info)
-    print("====")
-    print(emp_title)
-    print(emp_info)
-    
-    
-    # workprint = pd.DataFrame(result, columns=('공고명', '회사명'))
-    # workprint.to_csv('./jeju_worktogether/company.csv', encoding='cp949', mode='w', index=True)
-
-    # workprint = pd.DataFrame(company_info, columns=company_title)
-    # workprint.to_csv('./jeju_worktogether/company_info.csv', encoding='cp949', mode='w', index=True)
-
-    # workprint = pd.DataFrame(emp_info, columns=emp_title)
-    # workprint.to_csv('./jeju_worktogether/emp_info.csv', encoding='cp949', mode='w', index=True)
     
     workprint = pd.DataFrame(result, columns=['공고명', '회사명'])
     company_info_df = pd.DataFrame(company_info, columns=company_title)
