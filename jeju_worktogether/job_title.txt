@@ -1,1 +1,1 @@
-['직업영역개발사업이란?', '\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t장애인\t직업영역개발사업\t추진\t현황\t관련\t1994년도부터\t현재(2022년)까지\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t연도별,\t직무명,\t장애유형,\t참고자료\t정보\t제공\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t']
+[None]
