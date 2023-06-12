@@ -1,14 +1,18 @@
-from tika import parser
+from subprocess import Popen, PIPE
+
 
 hwp_file_path = '/Users/msun/Desktop/김만덕기념관.hwp'
+process = Popen(['hwp5txt', hwp_file_path], stdout=PIPE, stderr=PIPE)
+stdout, stderr = process.communicate()
+data = stdout.decode('utf-8')
 
-# Parse the HWP file and extract the content
-parsed_data = parser.from_file(hwp_file_path)
-content = parsed_data['content']
+# Split the text into paragraphs
+paragraphs = data.split('\n\n\n')
 
-# Save the extracted content to a text file
-output_file_path =  './hwp/output.txt'
-with open(output_file_path, 'w', encoding='utf-8') as f:
-    f.write(content)
+# Remove empty values and paragraphs with length <= 5
+filtered_paragraphs = []
+for paragraph in paragraphs:
+    paragraph = paragraph.strip().replace('<그림>', '').replace('<표>', '')
+    if len(paragraph) > 5:
+        filtered_paragraphs.append(paragraph.strip())
 
-print(f'HWP file content saved to: {output_file_path}')
