@@ -58,3 +58,8 @@ print(df.corr())
 df.corr()['survived']
 
 '''연습 문제'''
+condition1 = (df['fare'] >= 30) & (df['fare'] < 40)
+condition2 = (df['pclass'] == 1)
+print(df.loc[condition1 & condition2, 'age'].count())
+
+print(df.loc[condition1 & condition2, 'age'].mean())
