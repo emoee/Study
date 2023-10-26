@@ -41,8 +41,19 @@ df_copy2['round'] = round(df_copy2['fare'] / df_copy2['age'], 2) #소수점 자�
 #print(df_copy2['who'].astype('category').head(10))
 df_copy2['who'] = df_copy2['who'].astype('category')
 
-print(df_copy2['who'].cat.categories) #카테고리 타입의 속성 사용 가능 #출력
+#print(df_copy2['who'].cat.categories) #카테고리 타입의 속성 사용 가능 #출력
 df_copy2['who'].cat.categories = ['아이', '남자', '여자'] #이름 변경
-print(df_copy2['who'].value_counts())
+#print(df_copy2['who'].value_counts())
 
 '''연습 문제'''
+df1 = df.copy()
+df1 = df1.drop([1, 3, 5])
+print(df1.drop(['embarked', 'class', 'alone'], 1).head(10))
+
+df2 = df.copy()
+cut_bins = [0, 15, 30, 45, df2['age'].max()]
+df2['age_bin'] = pd.cut(df2['age'], cut_bins)
+print(df2['age_bin'].value_counts())
+
+df2['age_qbin'] = pd.qcut(df2['age'], 3, labels=['young', 'normal', 'old'])
+print(df2['age_qbin'].value_counts()) 

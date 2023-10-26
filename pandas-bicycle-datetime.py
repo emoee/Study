@@ -60,3 +60,11 @@ print(pd.qcut(df['이동거리'], qcut_bins, labels=qcut_labels).value_counts())
 적음     65482
 많음     65442
 '''
+
+df1 = df.copy()
+df1['대여일자'] = pd.to_datetime(df1['대여일자'])
+df1['연도'] = df1['대여일자'].dt.year
+df1['월'] = df1['대여일자'].dt.month
+df1['일'] = df1['대여일자'].dt.day
+df1['요일'] = df1['대여일자'].dt.dayofweek
+print(df1.head(5))
