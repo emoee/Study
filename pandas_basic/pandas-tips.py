@@ -10,3 +10,7 @@ tips = sns.load_dataset('tips')
 #print(tips.sort_values(['size', 'tip'], ascending=[False, True]).head(10))
 
 print(tips.loc[tips['day'].isin(['Fri','Sat']) & (tips['tip'] < 10), ['total_bill', 'tip', 'smoker', 'time']].head(10))
+
+'''연습 문제'''
+print(tips.pivot_table(index = 'smoker', columns = 'day', values = 'tip'))
+print(tips.pivot_table(index = 'day', columns = 'time', values = 'total_bill', aggfunc = ['mean', 'sum']))
