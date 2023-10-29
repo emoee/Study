@@ -80,7 +80,7 @@ plt.legend(['john', 'peter'])
 plt.show()
 '''
 
-''''''
+'''
 # line plot
 x = np.arange(0, 10, 0.1)
 y = 1 + np.sin(x)
@@ -92,6 +92,107 @@ plt.ylabel('y value', fontsize=15)
 plt.title('sin graph', fontsize=18)
 
 plt.grid()
+
+plt.show()
+'''
+
+'''
+# areaplot
+areax = np.arange(1, 21)
+areay = np.random.randint(low=5, high=10, size=20)
+plt.fill_between(areax, areay, color="green", alpha=0.5)
+plt.plot(areax, areay, color="green", alpha=0.8) # 경계선 굵게 
+plt.show()
+
+x = np.arange(1, 10, 0.05)
+y_1 =  np.cos(x)+1
+y_2 =  np.sin(x)+1
+y_3 = y_1 * y_2 / np.pi
+
+plt.fill_between(x, y_1, color="green", alpha=0.1)
+plt.fill_between(x, y_2, color="blue", alpha=0.2)
+plt.fill_between(x, y_3, color="red", alpha=0.3) # 그래프 겹쳐서 표현 가능
+plt.show()
+'''
+
+'''
+# histogram
+N = 100000
+bins = 30
+
+x = np.random.randn(N)
+
+fig, axs = plt.subplots(1, 3, 
+                        sharey=True, 
+                        tight_layout=True
+                       )
+
+fig.set_size_inches(12, 5)
+
+axs[0].hist(x, bins=bins)
+axs[1].hist(x, bins=bins*2) # bin의 크기 변화 : 히스토그램의 가로축 구간의 개수를 지정
+axs[2].hist(x, bins=bins*4)
+
+plt.show()
+
+N = 100000
+bins = 30
+
+x = np.random.randn(N)
+
+fig, axs = plt.subplots(1, 2, 
+                        tight_layout=True
+                       )
+fig.set_size_inches(9, 3)
+
+# density=True 값을 통하여 Y축에 density (밀도)를 표기할 수 있습니다.
+axs[0].hist(x, bins=bins, density=True, cumulative=True) # cumulative = True => 누적 히스토그램
+axs[1].hist(x, bins=bins, density=True)
+
+plt.show()
+'''
+
+'''
+# pie chart
+labels = ['Samsung', 'Huawei', 'Apple', 'Xiaomi', 'Oppo', 'Etc']
+sizes = [20.4, 15.8, 10.5, 9, 7.6, 36.7]
+explode = (0.3, 0, 0, 0, 0, 0) # 파이에서 튀어나온 비율
+
+# texts, autotexts  텍스트 효과
+patches, texts, autotexts = plt.pie(sizes, 
+                                    explode=explode, 
+                                    labels=labels,  
+                                    autopct='%1.1f%%',
+                                    shadow=True, 
+                                    startangle=90)
+
+plt.title('Smartphone pie', fontsize=15)
+
+for t in texts:
+    t.set_fontsize(12)
+    t.set_color('gray')
+
+# pie 위의 텍스트에 대한 스타일 적용
+for t in autotexts:
+    t.set_color("white")
+    t.set_fontsize(18)
+
+plt.show()
+'''
+
+# box plot
+# 샘플 데이터 생성
+spread = np.random.rand(50) * 100
+center = np.ones(25) * 50
+flier_high = np.random.rand(10) * 100 + 100
+flier_low = np.random.rand(10) * -100
+data = np.concatenate((spread, center, flier_high, flier_low))
+
+outlier_marker = dict(markerfacecolor='r', marker='D') # 다이아 모양에 빨간색
+
+plt.tight_layout()
+plt.title('Horizontal Box Plot', fontsize=15)
+plt.boxplot(data, vert=False,  flierprops=outlier_marker) # vert=False 축 변경, flierprops 마커 심볼 변경
 
 plt.show()
 
