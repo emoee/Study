@@ -6,6 +6,7 @@ import warnings
 
 
 tips = sns.load_dataset("tips")
+
 sns.catplot(x="sex", y="total_bill",
             hue="smoker", 
             data=tips, 
