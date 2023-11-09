@@ -2,13 +2,24 @@ from bs4 import BeautifulSoup
 import urllib
 import time
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 import pandas as pd
 import re
 import sys
-driver = webdriver.Chrome("/usr/local/bin/chromedriver")
 
 def work(result, company_info, emp_info, company_title, emp_title):
-    #검색 결과 개수 확인 및 설정
+    # Set the path to your chromedriver executable
+    chromedriver_path = "/usr/local/bin/chromedriver"
+    
+    # Create a Service object
+    service = Service(chromedriver_path)
+
+    # Create a ChromeOptions object
+    options = webdriver.ChromeOptions()
+    
+    # Pass the ChromeOptions object to the webdriver.Chrome constructor
+    driver = webdriver.Chrome(service=service, options=options)
+
     URL = "https://www.worktogether.or.kr/empInfo/empInfoSrch/list/retriveWorkRegionEmpSrchList.do?pageIndex=1&pageUnit=10&relYn=N&totalEmpCount=0&jobsCount=0&len=0&tot=0&depth1SelCode=50000&depth2SelCode=50000&superCode=50000&ckWorkRegionCd=50000&mainSubYn=N&softMatchingPossibleYn=Y&disableEmpHopeGbn=Y,D&pageSize=10&firstIndex=1&lastIndex=1&recordCountPerPage=10&rowNo=0&region=50000&regionNm=%EC%A0%9C%EC%A3%BC&benefitSrchAndOr=O&serialversionuid=3990642507954558837&onlyContentSrchYn=N&softMatchingMinRate=+66&softMatchingMaxRate=100&empTpGbcd=1&charSet=EUC-KR&startPos=0&collectionName=tb_workinfo&payGbn=noPay&termSearchGbn=all&onlyTitleSrchYn=N&cloTermSearchGbn=all&resultCnt=10&sortOrderBy=DESC&sortField=DATE"
     driver.get(URL)
     driver.execute_script("window.scrollTo(0,3000);") #스크롤 아래로 내기
@@ -18,7 +29,7 @@ def work(result, company_info, emp_info, company_title, emp_title):
     
     cnt = 1
     
-    for i in range(1, page+1):
+    for i in range(1, page):
         URL = 'https://www.worktogether.or.kr/empInfo/empInfoSrch/list/retriveWorkRegionEmpSrchList.do?pageIndex={0}&pageUnit=10&relYn=N&totalEmpCount=0&jobsCount=0&len=0&tot=0&depth1SelCode=50000&depth2SelCode=50000&superCode=50000&ckWorkRegionCd=50000&mainSubYn=N&softMatchingPossibleYn=Y&disableEmpHopeGbn=Y,D&pageSize=10&firstIndex=1&lastIndex=1&recordCountPerPage=10&rowNo=0&region=50000&regionNm=%EC%A0%9C%EC%A3%BC&benefitSrchAndOr=O&serialversionuid=3990642507954558837&onlyContentSrchYn=N&softMatchingMinRate=+66&softMatchingMaxRate=100&empTpGbcd=1&charSet=EUC-KR&startPos=0&collectionName=tb_workinfo&payGbn=noPay&termSearchGbn=all&onlyTitleSrchYn=N&cloTermSearchGbn=all&resultCnt=10&sortOrderBy=DESC&sortField=DATE'.format(i)
         driver.get(URL)
         driver.execute_script("window.scrollTo(0,3000);") #스크롤 아래로 내기
