@@ -6,6 +6,17 @@
 데이터셋 : basic1.csv
 오른쪽 상단 copy&edit 클릭 -> 예상문제 풀이 시작
 '''
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+df = pd.read_csv('/kaggle/input/bigdatacertificationkr/basic1.csv')
+
+scaler = StandardScaler()
+df['f5'] = scaler.fit_transform(df[['f5']])
+
+result = df['f5'].median()
+print(result)
+
 # 라이브러리 및 데이터 불러오기
 import numpy as np
 import pandas as pd

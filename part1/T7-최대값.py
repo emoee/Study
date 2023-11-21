@@ -4,6 +4,17 @@
 데이터셋 : basic1.csv
 오른쪽 상단 copy&edit 클릭 -> 예상문제 풀이 시작
 '''
+import pandas as pd
+
+df = pd.read_csv('/kaggle/input/bigdatacertificationkr/basic1.csv')
+
+df['f4'] = df['f4'].replace('ESFJ', 'ISFJ')
+
+con = (df['city'] == '경기') & (df['f4'] == 'ISFJ')
+result = df[con]['age'].max()
+
+print(result)
+
 # 라이브러리 및 데이터 불러오기
 import numpy as np
 import pandas as pd

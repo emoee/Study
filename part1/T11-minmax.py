@@ -4,6 +4,19 @@
 # - 데이터셋 : basic1.csv
 # - 오른쪽 상단 copy&edit 클릭 -> 예상문제 풀이 시작
 # - File -> Editor Type -> Script
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+
+df = pd.read_csv('../input/bigdatacertificationkr/basic1.csv')
+
+scaler = MinMaxScaler()
+df['f5M'] = scaler.fit_transform(df[['f5']])
+
+low = df['f5M'].quantile(0.05)
+high = df['f5M'].quantile(0.95)
+
+result = (low + high)
+print(result)
 
 import pandas as pd
 

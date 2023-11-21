@@ -6,6 +6,20 @@ import pandas as pd
 df = pd.read_csv("../input/covid-vaccination-vs-death/covid-vaccination-vs-death_ratio.csv")
 
 df2 = df.groupby('country').max()
+df2 = df2.sort_values(by = 'ratio', ascending = False)
+
+df2 = df2[df2['ratio'] <= 100]
+
+top = df2['ratio'].head(10).mean()
+bot = df2['ratio'].tail(10).mean()
+result = round(top - bot, 1)
+print(result)
+
+
+import pandas as pd
+df = pd.read_csv("../input/covid-vaccination-vs-death/covid-vaccination-vs-death_ratio.csv")
+
+df2 = df.groupby('country').max()
 df2 = df2.sort_values(by='ratio', ascending = False)
 
 cond = df2['ratio'] <= 100
