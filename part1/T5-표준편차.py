@@ -6,6 +6,19 @@
 오른쪽 상단 copy&edit 클릭 -> 예상문제 풀이 시작
 '''
 
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('/kaggle/input/bigdatacertificationkr/basic1.csv')
+
+conE = (df['f4'] == 'ENFJ') 
+conI = (df['f4'] == 'INFP')
+
+stdE = df[conE]['f1'].std() # 표준편차 : DataFrame.std()
+stdI = df[conI]['f1'].std()
+
+print(abs(stdE - stdI))
+
 # 라이브러리 및 데이터 불러오기
 import numpy as np
 import pandas as pd

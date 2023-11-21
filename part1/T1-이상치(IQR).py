@@ -6,6 +6,31 @@
 # 오른쪽 상단 copy&edit 클릭 -> 예상문제 풀이 시작
 # 데이터 위치 "../input/titanic/train.csv" (copy&edit가 아닐 경우 별도로 데이터셋 불러와야 함)
 
+import pandas as pd
+import numpy as np
+df = pd.read_csv('../input/titanic/train.csv')
+Q1 = np.percentile(df['Fare'], 25)
+Q3 = np.percentile(df['Fare'], 75)
+
+IQR = Q3 - Q1
+
+out1 = df[df['Fare'] < (Q1 - 1.5 * IQR)]
+out3 = df[df['Fare'] > (Q3 + 1.5 * IQR)]
+
+print(sum(out1['Sex'] == 'female') + sum(out3['Sex'] == 'female'))
+
+# IQR 구하기
+# pandas 활용
+# Q1 = df[col].quantile(.25)
+# Q3 = df[col].quantile(.75)
+
+# numpy 활용
+# Q1 = np.percentile(df[col], 25)
+# Q3 = np.percentile(df[col], 75)
+
+# IQR = Q3 - Q1
+# Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+
 # 라이브러리 및 데이터 불러오기
 import pandas as pd
 import numpy as np

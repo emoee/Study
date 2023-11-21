@@ -5,6 +5,20 @@
 # 오른쪽 상단 copy&edit 클릭 -> 예상문제 풀이 시작
 # 강의 영상 : https://youtu.be/c3Fr9G-ZYdw
 
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('../input/bigdatacertificationkr/basic1.csv')
+
+con = (df['age'] - np.floor(df['age'])) == 0 # 원래 값에서 버림한 것을 뺐을 때 0인 것
+df = df[~con] # 소수점 나이 찾기
+
+up = np.ceil(df['age']).mean()
+down = np.floor(df['age']).mean()
+drop = np.trunc(df['age']).mean()
+
+print(up + down + drop)
+
 # 라이브러리 및 데이터 불러오기
 import numpy as np
 import pandas as pd

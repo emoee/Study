@@ -15,6 +15,19 @@
 첨도값이 3보다 큰 양수이면(K>3) 정규분포보다 꼬리가 두꺼운 분포로 판단할 수 있다.
 
 '''
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('/kaggle/input/house-prices-advanced-regression-techniques/train.csv')
+spskew = df['SalePrice'].skew() # DataFrame.skew() 왜도
+spkurt = df['SalePrice'].kurt() # DataFrame.kurt() 첨도
+
+df['SalePrice'] = np.log1p(df['SalePrice'])
+spskew2 = df['SalePrice'].skew() # DataFrame.skew() 왜도
+spkurt2 = df['SalePrice'].kurt() # DataFrame.kurt() 첨도
+
+print(round(spskew + spkurt + spskew2 + spkurt2, 2))
+
 # 라이브러리 및 데이터 불러오기
 import pandas as pd
 import numpy as np

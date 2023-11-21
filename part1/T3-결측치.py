@@ -6,6 +6,24 @@
 강의 영상 : https://youtu.be/WqlpqBRn7x4
 '''
 
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('../input/bigdatacertificationkr/basic1.csv')
+
+df.isnull().sum() #f1 = 31, f3 = 95
+df.shape # (100, 8) 80%가 넘어가는 f3 삭제
+df = df.drop('f3', axis = 1)
+
+df['city'].unique() # array(['서울', '부산', '대구', '경기'], dtype=object)
+s = df[df['city'] == '서울']['f1'].median()
+b = df[df['city'] == '부산']['f1'].median()
+d = df[df['city'] == '대구']['f1'].median()
+k = df[df['city'] == '경기']['f1'].median()
+
+df['f1'] = df['f1'].fillna(df['city'].map({'서울':s,'경기':k,'부산':b,'대구':d}))
+print(df['f1'].mean())
+
 # 라이브러리 및 데이터 불러오기
 import numpy as np
 import pandas as pd
