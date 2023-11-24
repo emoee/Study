@@ -11,9 +11,9 @@
 # 데이터
 scores = [75, 80, 68, 72, 77, 82, 81, 79, 70, 74, 76, 78, 81, 73, 81, 78, 75, 72, 74, 79, 78, 79]
 
-from scipy.stats import ttest_1samp
+from scipy import stats
 mu = 75
-s, p = ttest_1samp(scores, mu, alternative='greater')
+s, p = stats.ttest_1samp(scores, mu, alternative='greater')
 print('검정통계량 : ', round(s,4))
 print('p-value : ', round(p,4))
 

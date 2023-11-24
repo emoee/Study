@@ -1,0 +1,4 @@
+T 검정
+쌍체 표본 : from scipy import stats / stats.ttest_rel()
+독립 표본 : from scipy import stats / stats.ttest_ind()
+단일 표본 : from scipy import stats / stats.ttest_1samp() - alternative='greater'
