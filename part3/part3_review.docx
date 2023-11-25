@@ -2,3 +2,19 @@ T 검정
 쌍체 표본 : from scipy import stats / stats.ttest_rel()
 독립 표본 : from scipy import stats / stats.ttest_ind()
 단일 표본 : from scipy import stats / stats.ttest_1samp() - alternative='greater'
+
+일원배치 ANOVA F 검정 : from scipy import stats / stats.f_oneway()
+샤피로윌크 : from scipy import stats / stats.shapiro()
+베르누이이항분포 : from scipy import / stats.binom.pmf()
+
+포아송분포 : from scipy import stats
+    stats.possion.pmf() / stats.possion.cdf(?, data) - 특정 값보다 작거나 같은 값이 발생할 확률
+
+카이제곱 : from scipy import stats
+    stats.chisquare(data1, data2) / 기대 빈도: stats.chi2_contingency(df)
+
+로지스틱회귀 : 첫 변수값에 영향을 미칠 변수들 정리 formula = "1 ~ 2 + 3 + 4"
+    from statsmodels.formula.api import logit
+    model = logit(formula, data = data).fit()
+    print(model.params)
+
