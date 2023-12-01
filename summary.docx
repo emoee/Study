@@ -1,0 +1,236 @@
+	작업형 1
+1.	함수 사용법
+def df_events(x):
+    if (x['Events'] == 1):
+        return x['Sales'] * 0.8
+    else:
+        return x['Sales']
+    
+df['RSales'] = df.apply(df_events, axis=1)
+
+2.	Merge와 dropna 사용법
+# basic1 데이터와 basic3 데이터를 'f4'값을 기준으로 병합하고,
+# 병합한 데이터에서 r2결측치를 제거한다음
+df = b1.merge(b3, how='inner', on='f4')
+df = df.dropna(subset=['r2'])
+
+3.	정렬
+# 오름차순 : 1, 2, 3, 4
+df = df[df['f2'] == 0].sort_values('age', ascending = True).head(20)
+# 내림차순 : 4, 3, 2, 1
+df = df.reset_index().sort_values('f5', ascending = False)
+
+4.	IQR
+Q1 = np.percentile(df['Fare'], 25)
+Q3 = np.percentile(df['Fare'], 75)
+IQR = Q3 - Q1
+
+out1 = df[df['Fare'] < (Q1 - 1.5 * IQR)]
+out3 = df[df['Fare'] > (Q3 + 1.5 * IQR)]
+
+5.	올림, 내림, 버림
+up = np.ceil(df['age']).mean()
+down = np.floor(df['age']).mean()
+drop = np.trunc(df['age']).mean()
+
+6.	스케일링 후 왜도 첨도 구하기
+df['SalePrice'] = np.log1p(df['SalePrice'])
+spskew2 = df['SalePrice'].skew() # DataFrame.skew() 왜도
+spkurt2 = df['SalePrice'].kurt() # DataFrame.kurt() 첨도
+
+7.	그룹으로 묶기
+df2 = df.groupby(['city','f2']).sum()
+
+8.	값 바꾸기
+df['f4'] = df['f4'].replace('ESFJ', 'ISFJ')
+
+9.	상위 하위 값 구하기
+# 주어진 데이터에서 'f5'컬럼을 min-max 스케일 변환한 후, 
+low = df['f5M'].quantile(0.05)
+high = df['f5M'].quantile(0.95)
+
+10.	날짜 변환
+df['Date'] = pd.to_datetime(df['Date'])
+df['year'] = df['Date'].dt.year
+df['month'] = df['Date'].dt.month
+df['wo'] = df['Date'].dt.dayofweek
+
+11.	 동일한 개수로 나누기
+동일한 개수로 나이 순으로 3그룹으로 나눈 뒤 각 그룹의 중앙값을 더하시오
+df['range'] = pd.qcut(df['age'], q=3, labels=['1', '2', '3'])
+
+12.	 중복데이터 발생 시 뒤에 데이터 삭제
+df = df.drop_duplicates(subset=['age'])
+
+
+이름	사용법
+분산	df['f1'].var()
+평균	df['f5'].mean()
+중앙값	df['f1'].fillna(df['f1'].median())
+최빈값	df['f1'].fillna(df['f1'].mode()[0])
+표준편차	df[conI]['f1'].std()
+누적합	df[con]['f1'].cumsum()
+
+
+	작업형 2
+1.	회귀 ( RandomForestRegressor )
+# 보험 요금??? 회귀 모델 RandomForestRegressor
+# Insurance Prediction (Regression)
+# 오늘 저희는 의료보험 데이터를 활용해 한 사람이 보험료를 얼마나 낼지를 예측하는 회귀 문제를 다뤄보겠습니다. 
+
+# print(x_train.info()) # 불필요컬럼 : 결측치 : 없음 / object : sex, smoker, region
+# print(x_test.info()) # 결측치 : 없음 / object : sex, smoker, region
+# print(y_train.info())
+
+# print(x_train.isnull().sum())
+# print(x_test.isnull().sum())
+# print(y_train.isnull().sum())
+
+# 삭제
+x_train = x_train.drop(columns=['id'])
+x_test_id = x_test.pop('id')
+y_train = y_train.drop(columns=['id'])
+
+# 원핫 인코딩 : sex, smoker / 라벨 : region
+ocol = ['sex', 'smoker']
+x_train = pd.get_dummies(data = x_train, columns = ocol)
+x_test = pd.get_dummies(data = x_test, columns = ocol)
+
+from sklearn.preprocessing import LabelEncoder
+encoder = LabelEncoder()
+x_train['region'] = encoder.fit_transform(x_train['region'])
+x_test['region'] = encoder.transform(x_test['region'])
+
+# 스케일링
+from sklearn.preprocessing import RobustScaler
+scaler = RobustScaler()
+rcol = ['age', 'bmi']
+x_train[rcol] = scaler.fit_transform(x_train[rcol])
+x_test[rcol] = scaler.transform(x_test[rcol])
+
+# 데이터 찢기
+# from sklearn.model_selection import train_test_split
+# x_train1, x_test1, y_train1, y_test1 = train_test_split(x_train, y_train, test_size = 0.2)
+
+# from sklearn.ensemble import RandomForestRegressor
+# model3 = RandomForestRegressor(n_estimators = 100, max_depth=5)
+# model3.fit(x_train1, np.ravel(y_train1))
+# model_pred3 = model3.predict(x_test1)
+
+# from sklearn.metrics import mean_squared_error
+# rmse2 = np.sqrt(mean_squared_error(y_test1, model_pred3))
+# print("Mean Squared Error:", rmse2)
+
+from sklearn.ensemble import RandomForestRegressor
+model = RandomForestRegressor(n_estimators = 100, max_depth=5)
+model.fit(x_train, np.ravel(y_train))
+model_pred = model.predict(x_test)
+
+result = pd.DataFrame({'id': x_test_id , 'charges':model_pred})#.to_csv('123.csv', index=False)
+print(result)
+
+rmse(y_test['charges'], model_pred)
+
+2.	분류 ( RandomForestClassifier)
+import pandas as pd
+
+train = pd.read_csv("../input/big-data-analytics-certification-kr-2022/train.csv")
+test = pd.read_csv("../input/big-data-analytics-certification-kr-2022/test.csv")
+
+# 데이터 파악
+# print(train.info()) # 삭제 : ID / pop : Segmentation  
+# print(test.info()) # pop : ID 
+
+train = train.drop(columns = ['ID'])
+train_seg = train.pop('Segmentation')
+test_id = test.pop('ID')
+
+# object : Gender /  Ever_Married /Graduated   /Profession /Spending_Score /Var_1 
+# 원핫인코딩 : Gender, Ever_Married, Graduated, Spending_Score
+# 라벨인코딩 : Profession, Var_1
+
+col = ['Gender', 'Ever_Married', 'Graduated', 'Spending_Score']
+train = pd.get_dummies(data=train, columns=col)
+test = pd.get_dummies(data=test, columns=col)
+
+from sklearn.preprocessing import LabelEncoder
+encoder = LabelEncoder()
+train['Profession'] = encoder.fit_transform(train['Profession'])
+test['Profession'] = encoder.transform(test['Profession'])
+
+train['Var_1'] = encoder.fit_transform(train['Var_1'])
+test['Var_1'] = encoder.transform(test['Var_1'])
+
+from sklearn.model_selection import train_test_split
+xtrain, xtest, ytrain, ytest = train_test_split(train, train_seg, test_size = 0.2)
+
+from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier()
+model.fit(xtrain, ytrain)
+model_pred = model.predict(test)
+
+result = pd.DataFrame({'ID': test_id, 'Segmentation': model_pred}).to_csv('submission.csv', index = False)
+print(result)
+
+	작업형 3
+1.	T검정
+1)	쌍체표본
+s , p = stats.ttest_rel(data['bp_post'], data['bp_pre'], alternative="less")
+if (p > 0.05):
+    result4 = 't'
+else:
+    result4 = 'f'
+# 여기서 result4가 f로 나왔으므로 p값이 유의수준보다 낮음을 의미
+# 즉 실험에 성공하였으니 대립가설이 채택되었다는 의미, 즉 귀무가설은 기각되었음
+2)	독립표본
+s, p = stats.ttest_ind(group1, group2)
+3)	단일표본
+s, p = stats.ttest_1samp(scores, mu, alternative='greater')
+
+2.	일원배치, ANOVA F-검정
+s , p= stats.f_oneway(groupA, groupB, groupC)
+
+3.	샤피로윌크
+# Shapiro-Wilk 검정을 사용하여 데이터가 정규 분포를 따르는지 검증하시오
+# 귀무 가설(H0): 데이터는 정규 분포를 따른다.
+# 대립 가설(H1): 데이터는 정규 분포를 따르지 않는다.
+s , p =stats.shapiro(data)
+# 0.9768090844154358 0.9676500558853149 T
+# 결과가 T이므로 실험에 실패, 즉 대립가설 기각, 귀무가설을 채택한다.
+
+4.	로지스틱회귀
+# C(Pclass): C()는 categorical 변수를 나타내며, Pclass 변수를 각 클래스(1, 2, 3)로 나누어 모델에 포함시킵니다.
+# 이러한 변수들이 종속 변수 Survived에 어떤 영향을 미치는지를 통계적으로 분석하는 것이 로지스틱 회귀모형의 목적입니다. 
+formula = "Survived ~ C(Pclass) + Gender + SibSp + Parch"
+
+from statsmodels.formula.api import logit
+model = logit(formula, data=df).fit()
+print(model.params)
+
+5.	카이제곱
+1)	기본 예제
+from scipy.stats import chisquare
+s, p = chisquare(f_obs=observed_frequencies, f_exp=expected_frequencies)
+2)	기대빈도
+result = stats.chi2_contingency(df)
+s = result.statistic
+p = result.pvalue
+dof = result.dof
+expected = result.expected_freq[0][0]
+
+6.	포아송분포
+result = stats.poisson.pmf(5, cust) * 100
+result2 = (1 - stats.poisson.cdf(1, cust)) * 100
+# 포아송 분포의 누적 분포 함수 (CDF)는 특정 값보다 작거나 같은 값이 발생할 확률을 제공합니다. 
+# 따라서 1 - stats.poisson.cdf(1, cust)은 2명 이상의 고객이 잡지를 구매할 확률을 구하는 것입니다.
+
+7.	베르누이-이항분포
+# [이항분포] 1번 문제에서 계산한 성공 확률을 사용하여, 
+# 100번의 시도 중 정확히 60번 성공할 확률을 계산하시오.
+total = len(df)
+n = 100
+t = 60
+success = df['Success'].sum()
+result = success/total
+result2 = stats.binom.pmf(t, n, result)
+# binom.pmf(t, n, result) 함수는 이항 분포의 확률 질량 함수(Probability Mass Function, PMF)를 계산하는 데 사용됩니다. 
