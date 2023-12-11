@@ -1,0 +1,23 @@
+1단계 : 데이터 파악하기, 데이터 학습 모델 선정(분류, 회귀)
+2단계 : 불필요한 데이터, 결측치, object, describe 등 해당 데이터 정리
+3단계 : 데이터 전처리하기 
+    불필요 데이터 : drop 사용
+    결측치 : isnull()로 확인 가능, fillna()를 통해 값 채워넣기
+            mean() = 평균, mode() = 최빈값 등 (최빈값으로 처리 할 시 value_counts()를 통해 확인할 것)
+    object : 원핫인코딩, 라벨 인코딩 등으로 데이터를 변환해야함. 처리하기 애매할 경우 삭제를 할 수 있음
+            원핫인코딩 : pd.get_dummies()
+            라벨인코딩 : from sklearn.preprocessing import LabelEncoder
+    describe : 해당 함수를 통해 스케일링 방법을 선택할 수 있으며 결측치를 어떤 값으로 사용할 지 선택할 수 있다.
+            스케일링 : StandardScaler, RobustScaler, MinMaxScaler 등이 있음
+                    시험에는 이상치에 영향을 잘 받지 않는 RobustScaler을 주로 사용할 수 있음
+                    RobustScaler : from sklearn.preprocessing import RobustScaler
+4단계 : 데이터 분리하기, 모델 학습 전 최적의 하이퍼파라미터를 찾기 위해 데이터를 분리하여 테스트 할 수 있음
+    데이터 분리 : from sklearn.model_selection import train_test_split
+    하이퍼파라미터 찾기 : 데이터 학습을 통해 n_estimators 와 max_depth의 값을 변경하며 찾기
+    채점 방식에 따라 값 확인 : from sklearn.metrics import roc_auc_score / import accuracy_score / import r2_score 등
+5단계 : 데이터 학습 
+    분류 : RandomForestClassifier, XGBClassifier
+    회귀 : RandomForestRegressor, XGBRegressor
+    문제에 맞는 데이터 모델 선택하여 학습시키기
+6단계 : 제출 형식에 맞게 제출하기
+    제출 : pd.DataFrame({'id' : test_id, 'pred' : model_pred}).to_csv('123.csv', index = False)
