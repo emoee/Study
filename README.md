@@ -1,8 +1,8 @@
 # study
 #### 해당 저장소에는 소규모로 제작된 프로그램, 공부하기 위해 작성된 코드가 있다.
 
-## Engineer-Big-Data-Analysis
-### 빅데이터분석기사 실기
+## 🗂 Engineer-Big-Data-Analysis
+> 📝 빅데이터분석기사 실기<br/>
 > 📍12월 2일 빅분기 실기 시험 준비
 
 ## 🗂 SWEA
