@@ -3,3 +3,4 @@
 *.class
 *.csv
 /bin
+node_modules
